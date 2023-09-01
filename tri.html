@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triangle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+    </style>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+ <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Triangle Calculator</h1>
+        <div class="input-group">
+            <label for="option">Select an option:</label>
+            <select id="option">
+                <option value="1">Given 3 Sides, Calculate Perimeter</option>
+                <option value="2">Given Base and Height, Calculate Area</option>
+                <option value="3">Given Area and Height, Calculate Base</option>
+                <option value="4">Given Area and Base, Calculate Height</option>
+            </select>
+        </div>
+        <div class="input-group" id="sideInput">
+            <label for="side1">Enter Side 1:</label>
+            <input type="number" id="side1">
+            <label for="side2">Enter Side 2:</label>
+            <input type="number" id="side2">
+            <label for="side3">Enter Side 3:</label>
+            <input type="number" id="side3">
+        </div>
+        <div class="input-group" id="baseHeightInput">
+            <label for="base">Enter Base:</label>
+            <input type="number" id="base">
+            <label for="height">Enter Height:</label>
+            <input type="number" id="height">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const option = document.getElementById("option").value;
+            const side1 = parseFloat(document.getElementById("side1").value);
+            const side2 = parseFloat(document.getElementById("side2").value);
+            const side3 = parseFloat(document.getElementById("side3").value);
+            const base = parseFloat(document.getElementById("base").value);
+            const height = parseFloat(document.getElementById("height").value);
+            let resultText = "";
+
+            if (option === "1") {
+                // Given 3 Sides, Calculate Perimeter
+                const perimeter = side1 + side2 + side3;
+                resultText = `Perimeter: ${perimeter.toFixed(2)}`;
+            } else if (option === "2") {
+                // Given Base and Height, Calculate Area
+                const area = 0.5 * base * height;
+                resultText = `Area: ${area.toFixed(2)}`;
+            } else if (option === "3") {
+                // Given Area and Height, Calculate Base
+                const base = (2 * area) / height;
+                resultText = `Base: ${base.toFixed(2)}`;
+            } else if (option === "4") {
+                // Given Area and Base, Calculate Height
+                const height = (2 * area) / base;
+                resultText = `Height: ${height.toFixed(2)}`;
+            } else {
+                resultText = "Invalid option selected.";
+            }
+
+            document.getElementById("result").textContent = resultText;
+        }
+
+        // Show/hide input fields based on the selected option
+        document.getElementById("option").addEventListener("change", function () {
+            const option = this.value;
+            document.getElementById("sideInput").style.display = option === "1" ? "block" : "none";
+            document.getElementById("baseHeightInput").style.display = option !== "1" ? "block" : "none";
+        });
+
+        // Initially hide input fields except the first one
+        document.getElementById("baseHeightInput").style.display = "none";
+    </script>
+</body>
+</html>

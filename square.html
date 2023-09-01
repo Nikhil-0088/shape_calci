@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Square Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+    </style>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+</head>
+
+<body>
+    <div class="container">
+        <h1>Square Calculator</h1>
+        <div class="input-group">
+            <label for="option">Select an option:</label>
+            <select id="option">
+                <option value="1">Given Side, Calculate Area and Perimeter</option>
+                <option value="2">Given Area, Calculate Side and Perimeter</option>
+                <option value="3">Given Perimeter, Calculate Side and Area</option>
+            </select>
+        </div>
+        <div class="input-group" id="sideInput">
+            <label for="side">Enter Side Length:</label>
+            <input type="number" id="side">
+        </div>
+        <div class="input-group" id="areaInput">
+            <label for="area">Enter Area:</label>
+            <input type="number" id="area">
+        </div>
+        <div class="input-group" id="perimeterInput">
+            <label for="perimeter">Enter Perimeter:</label>
+            <input type="number" id="perimeter">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const option = document.getElementById("option").value;
+            const side = parseFloat(document.getElementById("side").value);
+            const area = parseFloat(document.getElementById("area").value);
+            const perimeter = parseFloat(document.getElementById("perimeter").value);
+            let resultText = "";
+
+            if (option === "1") {
+                // Given Side, Calculate Area and Perimeter
+                const areaResult = Math.pow(side, 2);
+                const perimeterResult = 4 * side;
+                resultText = `Area: ${areaResult.toFixed(2)}, Perimeter: ${perimeterResult.toFixed(2)}`;
+            } else if (option === "2") {
+                // Given Area, Calculate Side and Perimeter
+                const sideResult = Math.sqrt(area);
+                const perimeterResult = 4 * sideResult;
+                resultText = `Side Length: ${sideResult.toFixed(2)}, Perimeter: ${perimeterResult.toFixed(2)}`;
+            } else if (option === "3") {
+                // Given Perimeter, Calculate Side and Area
+                const sideResult = perimeter / 4;
+                const areaResult = Math.pow(sideResult, 2);
+                resultText = `Side Length: ${sideResult.toFixed(2)}, Area: ${areaResult.toFixed(2)}`;
+            } else {
+                resultText = "Invalid option selected.";
+            }
+
+            document.getElementById("result").textContent = resultText;
+        }
+
+        // Show/hide input fields based on the selected option
+        document.getElementById("option").addEventListener("change", function () {
+            const option = this.value;
+            document.getElementById("sideInput").style.display = option === "1" ? "block" : "none";
+            document.getElementById("areaInput").style.display = option !== "1" ? "block" : "none";
+            document.getElementById("perimeterInput").style.display = option === "3" ? "block" : "none";
+        });
+
+        // Initially hide input fields except the first one
+        document.getElementById("areaInput").style.display = "none";
+        document.getElementById("perimeterInput").style.display = "none";
+    </script>
+</body>
+
+</html>

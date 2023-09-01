@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+    </style>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+ <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Circle Calculator</h1>
+        <div class="input-group">
+            <label for="option">Select an option:</label>
+            <select id="option">
+                <option value="1">Given Radius, Calculate Perimeter and Area</option>
+                <option value="2">Given Perimeter, Calculate Radius and Area</option>
+                <option value="3">Given Area, Calculate Radius and Perimeter</option>
+            </select>
+        </div>
+        <div class="input-group" id="radiusInput">
+            <label for="radius">Enter Radius:</label>
+            <input type="number" id="radius">
+        </div>
+        <div class="input-group" id="perimeterInput">
+            <label for="perimeter">Enter Perimeter:</label>
+            <input type="number" id="perimeter">
+        </div>
+        <div class="input-group" id="areaInput">
+            <label for="area">Enter Area:</label>
+            <input type="number" id="area">
+        </div>
+        <button onclick="calculate()">Calculate</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            const option = document.getElementById("option").value;
+            const radius = parseFloat(document.getElementById("radius").value);
+            const perimeter = parseFloat(document.getElementById("perimeter").value);
+            const area = parseFloat(document.getElementById("area").value);
+            let resultText = "";
+
+            if (option === "1") {
+                // Given Radius, Calculate Perimeter and Area
+                const calculatedPerimeter = 2 * Math.PI * radius;
+                const calculatedArea = Math.PI * Math.pow(radius, 2);
+                resultText = `Perimeter: ${calculatedPerimeter.toFixed(2)}, Area: ${calculatedArea.toFixed(2)}`;
+            } else if (option === "2") {
+                // Given Perimeter, Calculate Radius and Area
+                const calculatedRadius = perimeter / (2 * Math.PI);
+                const calculatedArea = Math.pow(calculatedRadius, 2) * Math.PI;
+                resultText = `Radius: ${calculatedRadius.toFixed(2)}, Area: ${calculatedArea.toFixed(2)}`;
+            } else if (option === "3") {
+                // Given Area, Calculate Radius and Perimeter
+                const calculatedRadius = Math.sqrt(area / Math.PI);
+                const calculatedPerimeter = 2 * Math.PI * calculatedRadius;
+                resultText = `Radius: ${calculatedRadius.toFixed(2)}, Perimeter: ${calculatedPerimeter.toFixed(2)}`;
+            } else {
+                resultText = "Invalid option selected.";
+            }
+
+            document.getElementById("result").textContent = resultText;
+        }
+
+        // Show/hide input fields based on the selected option
+        document.getElementById("option").addEventListener("change", function () {
+            const option = this.value;
+            document.getElementById("radiusInput").style.display = option === "1" ? "block" : "none";
+            document.getElementById("perimeterInput").style.display = option === "2" ? "block" : "none";
+            document.getElementById("areaInput").style.display = option === "3" ? "block" : "none";
+        });
+
+        // Initially hide input fields except the first one
+        document.getElementById("perimeterInput").style.display = "none";
+        document.getElementById("areaInput").style.display = "none";
+    </script>
+</body>
+</html>
